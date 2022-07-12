@@ -19,10 +19,10 @@ You must provide an API key using either of these two methods:
 
 #### Installation
 
-Copy the `datanest-api.js` into your project
-Or install this repository using npm (advanced)
+Install into your project
+`npm install --save npm install --save git+https://github.com/brandondr/datanest-api.git`
 
-Install the dependencies in your project
+Or copy `./datanest-api.js` file
 `npm install --save axios moment`
 
 #### Example usage
@@ -40,7 +40,7 @@ This code pushes up temperature 'Readings' (random numbers for example purposes)
 // (you may need to run 'npm install --save dotenv')
 require("dotenv").config();
 
-const datanestApi = require("./datanest-api.js");
+const datanestApi = require("datanest-api");
 
 // If you do not use a .env file
 datanestApi.setApiKey("(your key here)");
