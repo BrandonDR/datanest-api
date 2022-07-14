@@ -40,9 +40,11 @@ This code pushes up temperature 'Readings' (random numbers for example purposes)
 // (you may need to run 'npm install --save dotenv')
 require("dotenv").config();
 
-const datanestApi = require("datanest-api");
+const DatanestApi = require("datanest-api");
+// Optionally include the key parameter. If you do not use a .env file
+const datanestApi = new DatanestApi("(your key here)");
 
-// If you do not use a .env file
+// You can override the key later during runtime
 datanestApi.setApiKey("(your key here)");
 
 (async () => {

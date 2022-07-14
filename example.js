@@ -1,5 +1,6 @@
 require('dotenv').config();
-const datanestApi = require('./datanest-api');
+const DatanestApi = require('./datanest-api');
+const datanestApi = new DatanestApi();
 
 (async () => {
     await datanestApi.getGatherItems(8176, 'Temperature Reading');
