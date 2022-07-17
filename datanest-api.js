@@ -6,7 +6,7 @@ class DatanestApi {
     constructor(apiKey = null) {
         this.http = axios.create({
             baseURL: (process && process.env && process.env.DATANEST_API_BASE_URL || 'https://app.datanest.earth/public-api').trimEnd('/') + '/',
-            params: { api_key: apiKey }
+            params: { api_key: apiKey || process.env.DATANEST_API_KEY }
         });
         this.apiKey = apiKey;
         this.projectId = 0;
@@ -27,7 +27,7 @@ class DatanestApi {
     formatTimestamp(dateTime) {
         return moment(dateTime).format('YYYY-MM-DD HH:mm:ss');
     }
-    async getGatherItems(appName, { projectId = null, latestItems = true }) {
+    async getGatherItems(appName, { projectId, latestItems } = { projectId: null, latestItems: true }) {
         if (!projectId) projectId = this.projectId;
         const response = await this.http.get(`gather-app/${appName}/list`, {
             params: {
@@ -38,7 +38,7 @@ class DatanestApi {
 
         return response.data;
     }
-    async createGatherItems(appName, items, { projectId = null }) {
+    async createGatherItems(appName, items, { projectId } = { projectId: null }) {
         if (!projectId) projectId = this.projectId;
         const response = await this.http.post(`gather-app/${appName}/create`, {
             project_id: projectId,
@@ -47,7 +47,7 @@ class DatanestApi {
 
         return response.data;
     }
-    async updateGatherItems(appName, items, { projectId = null }) {
+    async updateGatherItems(appName, items, { projectId } = { projectId: null }) {
         if (!projectId) projectId = this.projectId;
         const response = await this.http.post(`gather-app/${appName}/update`, {
             project_id: projectId,
@@ -56,7 +56,7 @@ class DatanestApi {
 
         return response.data;
     }
-    async deleteGatherItems(appName, titles, { projectId = null, allowMultiple = false }) {
+    async deleteGatherItems(appName, titles, { projectId, allowMultiple } = { projectId: null, allowMultiple: true }) {
         if (!projectId) projectId = this.projectId;
         const response = await this.http.post(`gather-app/${appName}/delete`, {
             project_id: projectId,
