@@ -1,6 +1,7 @@
 
 const axios = require('axios');
 const moment = require('moment');
+const GatherApp = require('./gather-app');
 
 class DatanestApi {
     constructor(apiKey = null) {
@@ -16,10 +17,19 @@ class DatanestApi {
         this.http.defaults.params.api_key = newApiKey;
     }
     setBaseUrl(newBaseUrl) {
-        http.defaults.baseURL = newBaseUrl;
+        this.http.defaults.baseURL = newBaseUrl;
     }
     setProjectId(projectId) {
         this.projectId = projectId;
+    }
+    getGatherApp(appName) {
+        return new GatherApp(this, appName);
+    }
+    clone() {
+        const newDatanestApi = new DatanestApi(this.apiKey);
+        newDatanestApi.setProjectId(this.projectId);
+        newDatanestApi.setBaseUrl(this.http.defaults.baseURL);
+        return newDatanestApi;
     }
     getTimestamp() {
         return moment().format('YYYY-MM-DD HH:mm:ss');

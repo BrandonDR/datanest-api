@@ -3,16 +3,17 @@ const DatanestApi = require('./datanest-api');
 const datanestApi = new DatanestApi();
 
 (async () => {
-    datanestApi.setProjectId(8176);
-    await datanestApi.getGatherItems('Temperature Reading');
-    console.log((await datanestApi.createGatherItems('Temperature Reading', [
+    datanestApi.setProjectId(1667);
+    const temperatureApp = datanestApi.getGatherApp('Temperature Readings');
+    await temperatureApp.getGatherItems().catch(console.error);
+    console.log((await temperatureApp.createGatherItems([
         {
             'title': 'Test',
             'Lounge': {
                 'Timestamp': datanestApi.getTimestamp(),
-                'Reading': Math.round(Math.random() * 30),
+                'Temperature': Math.round(Math.random() * 30),
             }
         }
-    ])).items[0]);
-    console.log((await datanestApi.deleteGatherItems('Temperature Reading', ['Test'], { allowMultiple: true })));
+    ]).catch(console.error)).items[0]);
+    console.log((await temperatureApp.deleteGatherItems(['Test'], { allowMultiple: true }).catch(console.error)));
 })();
